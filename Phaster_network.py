@@ -5,10 +5,8 @@ from Bio import SeqIO
 import csv
 import numpy as np
 
-# summary_files = glob.glob("StaphAureusPhasters/*/summary.txt")
-#
 
-#">phage_i_j" where j is the jth gene in phage i
+#grab all phages you want to create a network for 
 
 gc_folders = glob.glob("ecoli_clusters/*")
 
@@ -21,7 +19,6 @@ for i in gc_folders:
     for j in SeqIO.parse(i,"fasta"):
         gene_cluste = i[15:]
         gene_cluster = gene_cluste[:(gene_cluste.find("."))]
-        # phage_id = j.id[:str(j.id).find("_",8)]
         phage_id = j.id[:str(j.id).find("_",6)]
         list1.append(phage_id)
         genome_name = phage_id
@@ -29,18 +26,6 @@ for i in gc_folders:
             phage_dict[genome_name]=list()
         phage_dict[genome_name].append(gene_cluster)
 
-# #pseduomona
-# list_seq = list(SeqIO.parse('Paeruginosa_phage/pangenome_all.csv', "fasta"))
-#
-# phage_dict = {}
-# for i in list_seq:
-#     line = i.id.split(("|"))
-#     gene_cluster = line[1][13:]
-#     genome_name = line[2][12:]
-#    # print(genome_name)
-#     if genome_name not in phage_dict.keys():
-#         phage_dict[genome_name]=list()
-#     phage_dict[genome_name].append(gene_cluster)
 
 
 genomes_list=list(phage_dict.keys())
@@ -71,16 +56,6 @@ for i in range(len(genomes_list)):
                 outfile.write(genomes_list[i])
                 outfile.write(","+ genomes_list[j])
                 outfile.write(','+str(values[i][j])+ "\n")
-
-
-#write a matrix
-# for i in range(len(genomes_list)):
-#     outfile.write(genomes_list[i])
-#     for j in range(len(genomes_list)):
-#         outfile.write(','+str(values[i][j]))
-#     outfile.write('\n')
-#
-# outfile.close()
 
 
 
